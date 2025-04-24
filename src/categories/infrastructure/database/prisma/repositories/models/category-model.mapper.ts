@@ -9,4 +9,18 @@ export class CategoryModelMapper {
     };
     return new CategoryEntity(data, categoryModel.id);
   }
+
+  static toModel(entity: CategoryEntity): Category {
+    let id: number;
+    try {
+      id = entity.id;
+    } catch (error) {
+      id = null;
+    }
+    return {
+      id,
+      name: entity.name,
+      createdAt: entity.createdAt,
+    };
+  }
 }
