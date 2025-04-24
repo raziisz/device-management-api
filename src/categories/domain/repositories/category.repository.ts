@@ -3,7 +3,7 @@ import {
   SearchParams,
   SearchResult,
 } from '@/shared/domain/repositories/searchable-repository.contracts';
-import { CategoryEntity } from '../category.entity';
+import { CategoryEntity } from '../entities/category.entity';
 import { Entity } from '@/shared/domain/entities/entity';
 
 export type CategoryFilter = string;
