@@ -23,7 +23,8 @@ export class CreateDeviceUseCase
   async execute(input: CreateDeviceInput): Promise<CreateDeviceOutput> {
     const { categoryId, color, partNumber } = input;
 
-    if (!categoryId) throw new BadRequestError('Category ID is required.');
+    if (!categoryId || categoryId <= 0)
+      throw new BadRequestError('Category ID is required.');
     if (!color || color.trim() === '')
       throw new BadRequestError('Color is required.');
     if (!partNumber || partNumber <= 0)
