@@ -5,7 +5,7 @@ export class CategoryModelMapper {
   static toEntity(categoryModel: Category) {
     const data = {
       name: categoryModel.name,
-      createdAt: categoryModel.createdAt,
+      createdAt: categoryModel.created_at,
     };
     return new CategoryEntity(data, categoryModel.id);
   }
@@ -20,7 +20,7 @@ export class CategoryModelMapper {
     return {
       id,
       name: entity.name,
-      createdAt: entity.createdAt,
+      created_at: entity.createdAt,
     };
   }
 }
