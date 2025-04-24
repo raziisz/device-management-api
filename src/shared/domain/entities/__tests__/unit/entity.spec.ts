@@ -10,7 +10,7 @@ describe('Entity unit test', () => {
     const props = { prop1: 'value1', prop2: 15 };
     const entity = new StubEntity(props);
 
-    expect(entity.props).toEqual(props);
+    expect(entity['props']).toEqual(props);
     expect(entity.id).toBeNull();
   });
 

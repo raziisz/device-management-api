@@ -7,6 +7,7 @@ import {
 import { PrismaService } from '@/shared/infrastructure/database/prisma/prisma.service';
 import { CategoryModelMapper } from './models/category-model.mapper';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
+import { ConflictError } from '@/shared/domain/errors/conflict-error';
 
 export class CategoryPrismaRepository implements CategoryRepository {
   sortableFields: string[] = ['name', 'createdAt'];
@@ -55,6 +56,12 @@ export class CategoryPrismaRepository implements CategoryRepository {
     });
   }
   async insert(entity: CategoryEntity): Promise<void | number> {
+    const existsCategory = await this.prismaService.category.findUnique({
+      where: { name: entity.name },
+    });
+
+    if (existsCategory) throw new ConflictError('Category already exists');
+
     const model = CategoryModelMapper.toModel(entity);
     delete model.id;
     await this.prismaService.category.create({

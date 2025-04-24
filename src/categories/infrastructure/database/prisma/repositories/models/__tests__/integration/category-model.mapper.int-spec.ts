@@ -1,10 +1,7 @@
-import {
-  Category,
-  PrismaClient,
-} from '@/shared/infrastructure/database/generated/prisma';
 import { setupPrismaTests } from '@/shared/infrastructure/database/prisma/testing/setup-prisma-tests';
 import { CategoryModelMapper } from '../../category-model.mapper';
 import { CategoryEntity } from '@/categories/domain/entities/category.entity';
+import { Category, PrismaClient } from '@prisma/client';
 
 describe('CategoryModelMapper Integration Tests', () => {
   let prismaService: PrismaClient;

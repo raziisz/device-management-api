@@ -13,6 +13,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ClassValidatorFields } from './shared/domain/validators/class-validator-fields';
+import { CategoryPresenter } from './categories/infrastructure/presenters/category.presenter';
+import { ConflictErrorFilter } from './shared/infrastructure/exception-filters/conflict-error/conflict-error.filter';
+import { NotFoundErrorFilter } from './shared/infrastructure/exception-filters/not-found-error/not-found-error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -36,7 +39,9 @@ async function bootstrap() {
     .addServer(process.env.SWAGGER_API_URL)
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    extraModels: [CategoryPresenter],
+  });
   SwaggerModule.setup('swagger', app, document);
 
   app.useGlobalPipes(
@@ -56,6 +61,8 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  app.useGlobalFilters(new ConflictErrorFilter(), new NotFoundErrorFilter());
 
   await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }

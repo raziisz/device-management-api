@@ -9,6 +9,7 @@ import {
   CategorySearchParams,
   CategorySearchResult,
 } from '@/categories/domain/repositories/category.repository';
+import { ConflictError } from '@/shared/domain/errors/conflict-error';
 
 describe('CategoryPrismaRepository Integration Tests', () => {
   const prismaService = new PrismaService();
@@ -31,9 +32,20 @@ describe('CategoryPrismaRepository Integration Tests', () => {
     await module.close();
   });
 
+  it('should throws error on insert when category conflict', async () => {
+    await prismaService.category.create({
+      data: { name: 'Teste', createdAt: new Date() },
+    });
+
+    const entity = new CategoryEntity({ name: 'Teste' });
+
+    await expect(() => sut.insert(entity)).rejects.toThrow(
+      new ConflictError('Category already exists'),
+    );
+  });
+
   it('should insert a new category', async () => {
     const entity = new CategoryEntity({ name: 'Teste Categoria' });
-    delete entity.id;
     await sut.insert(entity);
 
     const result = await prismaService.category.findUnique({
