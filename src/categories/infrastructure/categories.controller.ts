@@ -1,12 +1,15 @@
 import {
+  BadRequestException,
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Inject,
+  Post,
   Query,
 } from '@nestjs/common';
-import { ApiResponse, getSchemaPath } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, getSchemaPath } from '@nestjs/swagger';
 import {
   CategoryCollectionPresenter,
   CategoryPresenter,
@@ -16,11 +19,17 @@ import {
   ListCategoryOutput,
   ListCategoryUseCase,
 } from '../application/usecases/list-category.usecase';
+import { CreateCategoryUseCase } from '../application/usecases/create-category.usecase';
+import { NewCategoryDto } from './dtos/new-category.dto';
+import { BadRequestError } from '@/shared/application/errors/bad-request-error';
 
 @Controller('categories')
 export class CategoriesController {
   @Inject(ListCategoryUseCase)
   private listCategoryUseCase: ListCategoryUseCase;
+
+  @Inject(CreateCategoryUseCase)
+  private createCategoryUseCase: CreateCategoryUseCase;
 
   static listCategoryToResponse(output: ListCategoryOutput) {
     return new CategoryCollectionPresenter(output);
@@ -55,10 +64,41 @@ export class CategoriesController {
       },
     },
   })
+  @ApiOperation({
+    summary: 'List all categories with pagination and filtering',
+  })
   @HttpCode(HttpStatus.OK)
   @Get()
   async listDoctors(@Query() searchParams: ListCategoryDto) {
     const output = await this.listCategoryUseCase.execute(searchParams);
     return CategoriesController.listCategoryToResponse(output);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Category created',
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'Category already exists',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
+    description: 'Invalid data',
+  })
+  @ApiOperation({
+    summary: 'Create a new category',
+  })
+  @HttpCode(HttpStatus.CREATED)
+  @Post()
+  async createDoctor(@Body() newCategoryDto: NewCategoryDto) {
+    try {
+      await this.createCategoryUseCase.execute(newCategoryDto);
+    } catch (error) {
+      if (error instanceof BadRequestError) {
+        throw new BadRequestException(error.message);
+      }
+      throw error;
+    }
   }
 }
