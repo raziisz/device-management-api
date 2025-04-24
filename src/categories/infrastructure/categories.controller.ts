@@ -2,10 +2,12 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Inject,
+  Param,
   Post,
   Query,
 } from '@nestjs/common';
@@ -22,6 +24,7 @@ import {
 import { CreateCategoryUseCase } from '../application/usecases/create-category.usecase';
 import { NewCategoryDto } from './dtos/new-category.dto';
 import { BadRequestError } from '@/shared/application/errors/bad-request-error';
+import { DeleteCategoryUseCase } from '../application/usecases/delete-category.usecase';
 
 @Controller('categories')
 export class CategoriesController {
@@ -31,6 +34,8 @@ export class CategoriesController {
   @Inject(CreateCategoryUseCase)
   private createCategoryUseCase: CreateCategoryUseCase;
 
+  @Inject(DeleteCategoryUseCase)
+  private deleteCategoryUseCase: DeleteCategoryUseCase;
   static listCategoryToResponse(output: ListCategoryOutput) {
     return new CategoryCollectionPresenter(output);
   }
@@ -69,7 +74,7 @@ export class CategoriesController {
   })
   @HttpCode(HttpStatus.OK)
   @Get()
-  async listDoctors(@Query() searchParams: ListCategoryDto) {
+  async read(@Query() searchParams: ListCategoryDto) {
     const output = await this.listCategoryUseCase.execute(searchParams);
     return CategoriesController.listCategoryToResponse(output);
   }
@@ -91,7 +96,7 @@ export class CategoriesController {
   })
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async createDoctor(@Body() newCategoryDto: NewCategoryDto) {
+  async create(@Body() newCategoryDto: NewCategoryDto) {
     try {
       await this.createCategoryUseCase.execute(newCategoryDto);
     } catch (error) {
@@ -100,5 +105,22 @@ export class CategoriesController {
       }
       throw error;
     }
+  }
+
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: 'Category deleted',
+  })
+  @ApiOperation({
+    summary: 'Delete a category',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Category not found',
+  })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
+  async delete(@Param('id') id: number): Promise<void> {
+    await this.deleteCategoryUseCase.execute({ id });
   }
 }
