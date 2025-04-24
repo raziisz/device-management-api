@@ -41,7 +41,7 @@ export class CategoryPrismaRepository implements CategoryRepository {
         [orderByField]: orderByDir,
       },
       skip: props.page && props.page > 0 ? (props.page - 1) * props.perPage : 1,
-      take: props.perPage && props.perPage > 0 ? props.perPage : 25,
+      take: props.perPage && props.perPage > 0 ? props.perPage : 15,
     });
 
     return new CategorySearchResult({
@@ -55,12 +55,17 @@ export class CategoryPrismaRepository implements CategoryRepository {
     });
   }
   async insert(entity: CategoryEntity): Promise<void | number> {
+    const model = CategoryModelMapper.toModel(entity);
+    delete model.id;
     await this.prismaService.category.create({
-      data: entity.toJSON(),
+      data: model,
     });
   }
-  delete(id: number): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: number): Promise<void> {
+    await this._get(id);
+    await this.prismaService.category.delete({
+      where: { id },
+    });
   }
 
   protected async _get(id: number): Promise<CategoryEntity> {
