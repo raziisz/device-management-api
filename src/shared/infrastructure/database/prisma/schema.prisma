@@ -14,9 +14,21 @@ datasource db {
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique @db.VarChar(128)
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  name       String   @unique @db.VarChar(128)
+  created_at DateTime @default(now())
+  Device     Device[]
 
   @@map("categories")
+}
+
+model Device {
+  id          Int      @id @default(autoincrement())
+  part_number Int      @unique @db.Int
+  color       String   @db.VarChar(16)
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id], map: "device_category_fk")
+  created_at  DateTime @default(now())
+
+  @@map("devices")
 }
