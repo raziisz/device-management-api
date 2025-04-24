@@ -1,6 +1,6 @@
 export abstract class Entity<Props = any> {
   private _id: number;
-  public readonly props: Props;
+  protected readonly props: Props;
 
   constructor(props: Props, id?: number) {
     this.props = props;
