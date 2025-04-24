@@ -13,3 +13,11 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(128)
+  createdAt DateTime @default(now())
+
+  @@map("categories")
+}
