@@ -13,6 +13,10 @@ export class CategoryPrismaRepository implements CategoryRepository {
   sortableFields: string[] = ['name', 'createdAt'];
 
   constructor(private prismaService: PrismaService) {}
+  async findById(id: number): Promise<CategoryEntity> {
+    const model = await this._get(id);
+    return CategoryModelMapper.toEntity(model);
+  }
   async search(
     props: CategorySearchParams,
   ): Promise<CategorySearchResult<CategoryEntity>> {
