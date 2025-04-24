@@ -34,7 +34,7 @@ describe('CategoryPrismaRepository Integration Tests', () => {
 
   it('should throws error on insert when category conflict', async () => {
     await prismaService.category.create({
-      data: { name: 'Teste', createdAt: new Date() },
+      data: { name: 'Teste', created_at: new Date() },
     });
 
     const entity = new CategoryEntity({ name: 'Teste' });
@@ -67,7 +67,7 @@ describe('CategoryPrismaRepository Integration Tests', () => {
     const newCategory = await prismaService.category.create({
       data: {
         name: entity.name,
-        createdAt: entity.createdAt,
+        created_at: entity.createdAt,
       },
     });
 
@@ -102,7 +102,7 @@ describe('CategoryPrismaRepository Integration Tests', () => {
         data: entities.map(entity => {
           return {
             name: entity.name,
-            createdAt: entity.createdAt,
+            created_at: entity.createdAt,
           };
         }),
       });
@@ -139,7 +139,7 @@ describe('CategoryPrismaRepository Integration Tests', () => {
         data: entities.map(entity => {
           return {
             name: entity.name,
-            createdAt: entity.createdAt,
+            created_at: entity.createdAt,
           };
         }),
       });

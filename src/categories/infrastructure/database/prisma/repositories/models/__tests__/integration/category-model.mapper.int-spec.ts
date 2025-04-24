@@ -17,7 +17,7 @@ describe('CategoryModelMapper Integration Tests', () => {
     await prismaService.category.deleteMany();
     props = {
       name: 'Category 2',
-      createdAt: new Date(),
+      created_at: new Date(),
     };
   });
 
@@ -33,7 +33,8 @@ describe('CategoryModelMapper Integration Tests', () => {
     expect(sut).toBeInstanceOf(CategoryEntity);
     expect(sut.toJSON()).toStrictEqual({
       id: model.id,
-      ...props,
+      name: model.name,
+      createdAt: model.created_at,
     });
   });
 });
