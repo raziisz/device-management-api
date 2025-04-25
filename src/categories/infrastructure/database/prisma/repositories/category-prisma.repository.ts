@@ -10,14 +10,17 @@ import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { ConflictError } from '@/shared/domain/errors/conflict-error';
 
 export class CategoryPrismaRepository implements CategoryRepository {
-  sortableFields: string[] = ['name', 'createdAt'];
+  sortableFields: string[] = ['name', 'created_at'];
 
   constructor(private prismaService: PrismaService) {}
+  async findById(id: number): Promise<CategoryEntity> {
+    return await this._get(id);
+  }
   async search(
     props: CategorySearchParams,
   ): Promise<CategorySearchResult<CategoryEntity>> {
     const sortable = this.sortableFields.includes(props.sort);
-    const orderByField = sortable ? props.sort : 'createdAt';
+    const orderByField = sortable ? props.sort : 'created_at';
     const orderByDir = sortable ? props.sortDir : 'desc';
 
     const count = await this.prismaService.category.count({
