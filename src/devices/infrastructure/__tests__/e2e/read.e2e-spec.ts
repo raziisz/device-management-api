@@ -11,9 +11,6 @@ import { DatabaseModule } from '@/shared/infrastructure/database/database.module
 import { applyGlobalConfig } from '@/global-config';
 import { DeviceEntity } from '@/devices/domain/entities/device.entity';
 import request from 'supertest';
-import { instanceToPlain } from 'class-transformer';
-import { DevicesController } from '../../devices.controller';
-import { DevicePresenter } from '../../presenters/device.presenter';
 
 describe('DevicesController e2e tests', () => {
   let app: INestApplication;
