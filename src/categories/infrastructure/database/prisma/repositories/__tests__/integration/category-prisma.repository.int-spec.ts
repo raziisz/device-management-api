@@ -28,6 +28,7 @@ describe('CategoryPrismaRepository Integration Tests', () => {
   });
 
   afterAll(async () => {
+    await prismaService.category.deleteMany();
     await prismaService.$disconnect();
     await module.close();
   });
