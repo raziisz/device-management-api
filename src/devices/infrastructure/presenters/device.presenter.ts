@@ -3,6 +3,7 @@ import { DeviceOutput } from '@/devices/application/dtos/device.output';
 import { ListDeviceOutput } from '@/devices/application/usecase/list-device.usecase';
 import { CollectionPresenter } from '@/shared/infrastructure/presenters/collection.presenter';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class DevicePresenter {
   @ApiProperty({ description: 'ID of the device' })
@@ -14,6 +15,7 @@ export class DevicePresenter {
   @ApiProperty({ description: 'Category of the device' })
   category: CategoryPresenter;
   @ApiProperty({ description: 'Date of creation' })
+  @Transform(({ value }: { value: Date }) => value.toISOString())
   createdAt: Date;
 
   constructor(output: DeviceOutput) {
