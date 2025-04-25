@@ -7,6 +7,7 @@ import {
 import { PrismaService } from '@/shared/infrastructure/database/prisma/prisma.service';
 import { DeviceModelMapper } from './models/device-model.mapper';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
+import { ConflictError } from '@/shared/domain/errors/conflict-error';
 
 export class DevicePrismaRepository implements DeviceRepository {
   sortableFields: string[] = ['created_at'];
@@ -71,14 +72,26 @@ export class DevicePrismaRepository implements DeviceRepository {
       filter: props.filter,
     });
   }
-  insert(entity: DeviceEntity): Promise<void | number> {
-    throw new Error('Method not implemented.');
+  async insert(entity: DeviceEntity): Promise<void | number> {
+    const existsDevice = await this.prismaService.device.findUnique({
+      where: { part_number: entity.partNumber },
+    });
+    if (existsDevice) throw new ConflictError('Device already exists');
+
+    const model = DeviceModelMapper.toModel(entity);
+    delete model.id;
+    await this.prismaService.device.create({
+      data: model,
+    });
   }
   async findById(id: number): Promise<DeviceEntity> {
     return await this._get(id);
   }
-  delete(id: number): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: number): Promise<void> {
+    await this._get(id);
+    await this.prismaService.device.delete({
+      where: { id },
+    });
   }
 
   protected async _get(id: number): Promise<DeviceEntity> {
