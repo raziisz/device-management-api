@@ -58,7 +58,7 @@ describe('DevicePrismaRepository Integration tests', () => {
     });
 
     await expect(() => sut.insert(entity)).rejects.toThrow(
-      new ConflictError('Device already exists'),
+      new ConflictError('Partnumber already used'),
     );
   });
 

@@ -76,7 +76,7 @@ export class DevicePrismaRepository implements DeviceRepository {
     const existsDevice = await this.prismaService.device.findUnique({
       where: { part_number: entity.partNumber },
     });
-    if (existsDevice) throw new ConflictError('Device already exists');
+    if (existsDevice) throw new ConflictError('Partnumber already used');
 
     const model = DeviceModelMapper.toModel(entity);
     delete model.id;
