@@ -13,11 +13,11 @@ export class ListDeviceDto implements ListDeviceInput {
   perPage?: number;
 
   @ApiPropertyOptional({
-    description: 'Sorting field: "createdAt", "partNumber", "color"',
+    description: 'Sorting field: "created_at", "part_number", "color"',
   })
   @IsOptional()
-  @IsIn(['createdAt', 'partNumber', 'color'], {
-    message: 'Value sort must be "createdAt" or "partNumber" or "color"',
+  @IsIn(['created_at', 'part_number', 'color'], {
+    message: 'Value sort must be "created_at" or "part_number" or "color"',
   })
   sort?: string;
 

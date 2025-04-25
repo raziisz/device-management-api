@@ -22,7 +22,6 @@ export class ListDeviceUseCase
   async execute(input: ListDeviceInput): Promise<ListDeviceOutput> {
     const params = new DeviceSearchParams(input);
     const searchResult = await this.deviceRepository.search(params);
-
     return this.toOutput(searchResult);
   }
 
@@ -30,7 +29,6 @@ export class ListDeviceUseCase
     const items = searchResult.items.map(item =>
       DeviceOutputMapper.toOutput(item),
     );
-
     return PaginationOutputMapper.toOutput(items, searchResult);
   }
 }

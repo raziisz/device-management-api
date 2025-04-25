@@ -12,6 +12,9 @@ export type DeviceOutput = {
 
 export class DeviceOutputMapper {
   static toOutput(entity: DeviceEntity): DeviceOutput {
-    return entity.toJSON();
+    return {
+      ...entity.toJSON(),
+      category: entity.category.toJSON(),
+    };
   }
 }

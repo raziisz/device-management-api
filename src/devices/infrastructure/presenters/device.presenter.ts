@@ -22,7 +22,9 @@ export class DevicePresenter {
     this.id = output.id;
     this.partNumber = output.partNumber;
     this.color = output.color;
-    this.category = new CategoryPresenter(output.category);
+    this.category = output.category
+      ? new CategoryPresenter(output.category)
+      : null;
     this.createdAt = output.createdAt;
   }
 }
