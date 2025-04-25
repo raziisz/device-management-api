@@ -58,6 +58,14 @@ describe('DevicesController e2e tests', () => {
     await prismaService.device.deleteMany();
   });
 
+  afterAll(async () => {
+    await prismaService.device.deleteMany();
+    await prismaService.category.deleteMany();
+    await prismaService.$disconnect();
+    await module.close();
+    await app.close();
+  });
+
   describe('POST /devices', () => {
     it('should create a device', async () => {
       const response = await request(app.getHttpServer())
