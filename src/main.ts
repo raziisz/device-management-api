@@ -16,6 +16,7 @@ import { ClassValidatorFields } from './shared/domain/validators/class-validator
 import { CategoryPresenter } from './categories/infrastructure/presenters/category.presenter';
 import { ConflictErrorFilter } from './shared/infrastructure/exception-filters/conflict-error/conflict-error.filter';
 import { NotFoundErrorFilter } from './shared/infrastructure/exception-filters/not-found-error/not-found-error.filter';
+import { DevicePresenter } from './devices/infrastructure/presenters/device.presenter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -40,7 +41,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    extraModels: [CategoryPresenter],
+    extraModels: [CategoryPresenter, DevicePresenter],
   });
   SwaggerModule.setup('swagger', app, document);
 
