@@ -59,6 +59,7 @@ export class DevicePrismaRepository implements DeviceRepository {
       orderBy: {
         [orderByField]: orderByDir,
       },
+      include: { category: true },
       skip: props.page && props.page > 0 ? (props.page - 1) * props.perPage : 1,
       take: props.perPage && props.perPage > 0 ? props.perPage : 15,
     });
@@ -76,7 +77,7 @@ export class DevicePrismaRepository implements DeviceRepository {
     const existsDevice = await this.prismaService.device.findUnique({
       where: { part_number: entity.partNumber },
     });
-    if (existsDevice) throw new ConflictError('Device already exists');
+    if (existsDevice) throw new ConflictError('Partnumber already used');
 
     const model = DeviceModelMapper.toModel(entity);
     delete model.id;

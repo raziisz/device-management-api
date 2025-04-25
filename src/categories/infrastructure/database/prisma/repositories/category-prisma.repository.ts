@@ -67,9 +67,11 @@ export class CategoryPrismaRepository implements CategoryRepository {
 
     const model = CategoryModelMapper.toModel(entity);
     delete model.id;
-    await this.prismaService.category.create({
+    const category = await this.prismaService.category.create({
       data: model,
     });
+
+    return category.id;
   }
   async delete(id: number): Promise<void> {
     await this._get(id);

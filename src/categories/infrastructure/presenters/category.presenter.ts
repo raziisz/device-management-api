@@ -2,6 +2,7 @@ import { CategoryOutput } from '@/categories/application/dtos/category.output';
 import { ListCategoryOutput } from '@/categories/application/usecases/list-category.usecase';
 import { CollectionPresenter } from '@/shared/infrastructure/presenters/collection.presenter';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class CategoryPresenter {
   @ApiProperty({ description: 'ID of the category' })
@@ -9,7 +10,9 @@ export class CategoryPresenter {
   @ApiProperty({ description: 'Name of the category' })
   name: string;
   @ApiProperty({ description: 'Date of creation' })
+  @Transform(({ value }: { value: Date }) => value.toISOString())
   createdAt: Date;
+
   constructor(output: CategoryOutput) {
     this.id = output.id;
     this.name = output.name;

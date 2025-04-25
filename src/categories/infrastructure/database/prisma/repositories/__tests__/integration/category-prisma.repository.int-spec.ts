@@ -28,6 +28,7 @@ describe('CategoryPrismaRepository Integration Tests', () => {
   });
 
   afterAll(async () => {
+    await prismaService.category.deleteMany();
     await prismaService.$disconnect();
     await module.close();
   });
@@ -53,6 +54,28 @@ describe('CategoryPrismaRepository Integration Tests', () => {
     });
 
     expect(result.name).toStrictEqual(entity.name);
+  });
+
+  it('should throws error on get when category not found', async () => {
+    await expect(() => sut.findById(1234)).rejects.toThrow(
+      new NotFoundError('Category not found'),
+    );
+  });
+  it('should get a category', async () => {
+    const entity = new CategoryEntity({ name: 'Teste Categoria' });
+    delete entity.id;
+    const newCategory = await prismaService.category.create({
+      data: {
+        name: entity.name,
+        created_at: entity.createdAt,
+      },
+    });
+    const category = await sut.findById(newCategory.id);
+    expect(category).toBeInstanceOf(CategoryEntity);
+    expect(category.toJSON()).toMatchObject({
+      ...entity.toJSON(),
+      id: newCategory.id,
+    });
   });
 
   it('should throws error on delete when category not found', async () => {

@@ -58,7 +58,7 @@ describe('DevicePrismaRepository Integration tests', () => {
     });
 
     await expect(() => sut.insert(entity)).rejects.toThrow(
-      new ConflictError('Device already exists'),
+      new ConflictError('Partnumber already used'),
     );
   });
 
@@ -78,6 +78,33 @@ describe('DevicePrismaRepository Integration tests', () => {
     expect(result.color).toStrictEqual(entity.color);
     expect(result.category_id).toStrictEqual(entity.categoryId);
     expect(result.created_at).toStrictEqual(entity.createdAt);
+  });
+
+  it('should get a device by id', async () => {
+    const entity = new DeviceEntity({
+      categoryId: category.id,
+      partNumber: 1234,
+      color: 'red',
+    });
+    const newDevice = await prismaService.device.create({
+      data: {
+        category_id: entity.categoryId,
+        part_number: entity.partNumber,
+        color: entity.color,
+        created_at: entity.createdAt,
+      },
+    });
+    const output = await sut.findById(newDevice.id);
+    expect(output).toBeInstanceOf(DeviceEntity);
+    expect(output.toJSON()).toMatchObject({
+      ...entity.toJSON(),
+      id: newDevice.id,
+    });
+  });
+  it('should throws error on get when device not found', async () => {
+    await expect(() => sut.findById(1234)).rejects.toThrow(
+      new NotFoundError('Device not found'),
+    );
   });
 
   it('should throws error on delete when device not found', async () => {
@@ -152,7 +179,6 @@ describe('DevicePrismaRepository Integration tests', () => {
         expect(item).toBeInstanceOf(DeviceEntity);
       });
       items.reverse().forEach((item, index) => {
-        console.log(item.partNumber);
         expect(`Color ${index + 1}`).toBe(item.color);
       });
     });

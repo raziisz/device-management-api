@@ -40,5 +40,6 @@ import { DeleteCategoryUseCase } from '../application/usecases/delete-category.u
     },
   ],
   controllers: [CategoriesController],
+  exports: ['CategoryRepository'],
 })
 export class CategoriesModule {}
