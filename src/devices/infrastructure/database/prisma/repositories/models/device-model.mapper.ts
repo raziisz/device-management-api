@@ -1,11 +1,27 @@
+import { CategoryEntity } from '@/categories/domain/entities/category.entity';
 import { DeviceEntity } from '@/devices/domain/entities/device.entity';
-import { Device } from '@prisma/client';
+import { Device, Prisma } from '@prisma/client';
+
+type DeviceWithCategory = Prisma.DeviceGetPayload<{
+  include: { category: true };
+}>;
 
 export class DeviceModelMapper {
-  static toEntity(deviceModel: Device) {
+  static toEntity(deviceModel: DeviceWithCategory | Device) {
+    let category = null;
+    if ('category' in deviceModel) {
+      category = new CategoryEntity(
+        {
+          createdAt: deviceModel.category.created_at,
+          name: deviceModel.category.name,
+        },
+        deviceModel.category.id,
+      );
+    }
     const data = {
       categoryId: deviceModel.category_id,
       partNumber: deviceModel.part_number,
+      category,
       color: deviceModel.color,
       createdAt: deviceModel.created_at,
     };
