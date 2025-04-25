@@ -7,6 +7,7 @@ import { CategoryRepository } from '@/categories/domain/repositories/category.re
 import { ListDeviceUseCase } from '../application/usecase/list-device.usecase';
 import { DeleteDeviceUseCase } from '../application/usecase/delete-device.usecase';
 import { CategoriesModule } from '@/categories/infrastructure/categories.module';
+import { DevicesController } from './devices.controller';
 
 @Module({
   imports: [CategoriesModule],
@@ -42,5 +43,6 @@ import { CategoriesModule } from '@/categories/infrastructure/categories.module'
       inject: ['DeviceRepository'],
     },
   ],
+  controllers: [DevicesController],
 })
 export class DevicesModule {}
