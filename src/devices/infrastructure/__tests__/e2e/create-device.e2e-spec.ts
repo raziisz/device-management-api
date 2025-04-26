@@ -1,6 +1,6 @@
 import { CategoryRepository } from '@/categories/domain/repositories/category.repository';
 import { DeviceRepository } from '@/devices/domain/repositories/device.repository';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { NewDeviceDto } from '../../dtos/new-device.dto';
 import { PrismaClient } from '@prisma/client';
@@ -20,6 +20,7 @@ describe('DevicesController e2e tests', () => {
   let categoryRepository: CategoryRepository;
   let newDeviceDto: NewDeviceDto;
   let categoryId: number;
+
   const prismaService = new PrismaClient();
 
   beforeAll(async () => {
@@ -71,14 +72,14 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send(newDeviceDto)
-        .expect(201);
+        .expect(HttpStatus.CREATED);
     });
 
     it('should return an error with 422 code when the request body is invalid', async () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send({})
-        .expect(422);
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([
@@ -96,7 +97,7 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send(newDeviceDto)
-        .expect(422);
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([
@@ -109,7 +110,7 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send(newDeviceDto)
-        .expect(422);
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([
@@ -122,7 +123,7 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send(newDeviceDto)
-        .expect(422);
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([
@@ -134,7 +135,7 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send(Object.assign(newDeviceDto, { invalidField: 'invalid' }))
-        .expect(422);
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([
@@ -152,7 +153,7 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send(newDeviceDto)
-        .expect(409);
+        .expect(HttpStatus.CONFLICT);
 
       expect(response.body.error).toBe('Conflict');
       expect(response.body.message).toEqual('Partnumber already used');

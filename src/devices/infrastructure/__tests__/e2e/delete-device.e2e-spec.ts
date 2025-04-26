@@ -1,5 +1,3 @@
-import { CategoryRepository } from '@/categories/domain/repositories/category.repository';
-import { DeviceRepository } from '@/devices/domain/repositories/device.repository';
 import { setupPrismaTests } from '@/shared/infrastructure/database/prisma/testing/setup-prisma-tests';
 import { EnvConfigModule } from '@/shared/infrastructure/env-config/env-config.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';
@@ -16,8 +14,6 @@ import request from 'supertest';
 describe('DevicesController e2e tests', () => {
   let app: INestApplication;
   let module: TestingModule;
-  let categoryRepository: CategoryRepository;
-  let deviceRepository: DeviceRepository;
   let categoryId: number;
   let deviceEntity: DeviceEntity;
   const prismaService = new PrismaClient();
@@ -37,8 +33,6 @@ describe('DevicesController e2e tests', () => {
     applyGlobalConfig(app);
     await app.init();
 
-    categoryRepository = module.get<CategoryRepository>('CategoryRepository');
-    deviceRepository = module.get<DeviceRepository>('DeviceRepository');
     await prismaService.device.deleteMany();
     await prismaService.category.deleteMany();
     const categoryModel = await prismaService.category.create({

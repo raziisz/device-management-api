@@ -4,6 +4,7 @@ import {
 } from '@/devices/domain/repositories/device.repository';
 import { ListDeviceUseCase } from '../../list-device.usecase';
 import { DeviceEntity } from '@/devices/domain/entities/device.entity';
+import { CategoryEntity } from '@/categories/domain/entities/category.entity';
 
 describe('ListDeviceUseCase Unit tests', () => {
   let sut: ListDeviceUseCase;
@@ -18,7 +19,15 @@ describe('ListDeviceUseCase Unit tests', () => {
   it('Should list devices', async () => {
     const fakeResult = new DeviceSearchResult({
       items: [
-        new DeviceEntity({ categoryId: 1, color: 'black', partNumber: 123 }),
+        new DeviceEntity({
+          categoryId: 1,
+          color: 'black',
+          partNumber: 123,
+          category: new CategoryEntity(
+            { name: 'Category 1', createdAt: new Date() },
+            1,
+          ),
+        }),
       ],
       total: 1,
       currentPage: 1,

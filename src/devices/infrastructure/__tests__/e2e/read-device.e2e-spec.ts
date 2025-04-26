@@ -11,6 +11,9 @@ import { DatabaseModule } from '@/shared/infrastructure/database/database.module
 import { applyGlobalConfig } from '@/global-config';
 import { DeviceEntity } from '@/devices/domain/entities/device.entity';
 import request from 'supertest';
+import { DeviceModelMapper } from '../../database/prisma/repositories/models/device-model.mapper';
+import { instanceToPlain } from 'class-transformer';
+import { DevicePresenter } from '../../presenters/device.presenter';
 
 describe('DevicesController e2e tests', () => {
   let app: INestApplication;
@@ -84,6 +87,11 @@ describe('DevicesController e2e tests', () => {
         })),
       });
 
+      const models = await prismaService.device.findMany({
+        orderBy: { created_at: 'desc' },
+        include: { category: true },
+      });
+      const devicesEntity = models.map(DeviceModelMapper.toEntity);
       const searchParams = {};
       const queryParams = new URLSearchParams(searchParams as any).toString();
 
@@ -92,6 +100,24 @@ describe('DevicesController e2e tests', () => {
         .expect(HttpStatus.OK);
 
       expect(Object.keys(response.body)).toStrictEqual(['data', 'meta']);
+      expect(response.body.data).toStrictEqual(
+        [...devicesEntity].map(item => {
+          return instanceToPlain(
+            new DevicePresenter({
+              categoryId: item.categoryId,
+              color: item.color,
+              partNumber: item.partNumber,
+              createdAt: item.createdAt,
+              id: item.id,
+              category: {
+                id: item.category.id,
+                name: item.category.name,
+                createdAt: item.category.createdAt,
+              },
+            }),
+          );
+        }),
+      );
       expect(response.body.meta).toStrictEqual({
         total: 3,
         currentPage: 1,
