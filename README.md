@@ -45,7 +45,7 @@ $ npm run start:dev
 
 ### 🧪 Rodando os testes localmente
 
-Para rodar os testes no bash abaixo, crie o arquivo .env.test com a variavel de ambiente NODE_ENV=development e demais variaveis colocando de acordo com seu ambiente.
+Para rodar os testes no bash abaixo, crie o arquivo .env.test com a variavel de ambiente NODE_ENV=test e demais variaveis colocando de acordo com seu ambiente.
 
 ```bash
 #Todos os scripts abaixo aponta para .env.test onde o mesmo irá apontar o banco de dados test que vc definir.
