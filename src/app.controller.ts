@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
   @Get()
   getHello(): string {
-    return `Olá mundo2.`;
+    return `Oi, eu sou a aplicação Device Management API - ${new Date().toISOString()}`;
   }
 }
