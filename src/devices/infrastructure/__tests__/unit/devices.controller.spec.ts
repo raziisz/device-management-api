@@ -1,9 +1,5 @@
 import { DeviceOutput } from '@/devices/application/dtos/device.output';
 import { DevicesController } from '../../devices.controller';
-import {
-  CreateDeviceOutput,
-  CreateDeviceUseCase,
-} from '@/devices/application/usecase/create-device.usecase';
 import { ListDeviceOutput } from '@/devices/application/usecase/list-device.usecase';
 import { ListDeviceDto } from '../../dtos/list-device.dto';
 import { DeviceCollectionPresenter } from '../../presenters/device.presenter';
@@ -60,11 +56,11 @@ describe('DevicesController', () => {
       lastPage: 1,
     };
 
-    const mockListUsersUseCase = {
+    const mockListDevicesUseCase = {
       execute: jest.fn().mockResolvedValue(Promise.resolve(output)),
     };
 
-    sut['listDeviceUseCase'] = mockListUsersUseCase as any;
+    sut['listDeviceUseCase'] = mockListDevicesUseCase as any;
     const searchParams: ListDeviceDto = {
       page: 1,
       perPage: 1,
@@ -73,7 +69,7 @@ describe('DevicesController', () => {
     const presenter = await sut.read(searchParams);
     expect(presenter).toBeInstanceOf(DeviceCollectionPresenter);
     expect(presenter).toEqual(new DeviceCollectionPresenter(output));
-    expect(mockListUsersUseCase.execute).toHaveBeenCalledWith(searchParams);
+    expect(mockListDevicesUseCase.execute).toHaveBeenCalledWith(searchParams);
   });
 
   it('should delete a device', async () => {
