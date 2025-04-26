@@ -16,8 +16,6 @@ import request from 'supertest';
 describe('DevicesController e2e tests', () => {
   let app: INestApplication;
   let module: TestingModule;
-  let categoryRepository: CategoryRepository;
-  let deviceRepository: DeviceRepository;
   let categoryId: number;
   let deviceEntity: DeviceEntity;
   const prismaService = new PrismaClient();
@@ -37,8 +35,6 @@ describe('DevicesController e2e tests', () => {
     applyGlobalConfig(app);
     await app.init();
 
-    categoryRepository = module.get<CategoryRepository>('CategoryRepository');
-    deviceRepository = module.get<DeviceRepository>('DeviceRepository');
     await prismaService.device.deleteMany();
     await prismaService.category.deleteMany();
     const categoryModel = await prismaService.category.create({

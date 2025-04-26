@@ -45,6 +45,7 @@ describe('DeviceModelMapper Integration Tests', () => {
     expect(sut).toBeInstanceOf(DeviceEntity);
     expect(sut.toJSON()).toStrictEqual({
       id: model.id,
+      category: null,
       categoryId: model.category_id,
       partNumber: model.part_number,
       color: model.color,
