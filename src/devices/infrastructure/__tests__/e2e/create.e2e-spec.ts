@@ -20,7 +20,7 @@ describe('DevicesController e2e tests', () => {
   let categoryRepository: CategoryRepository;
   let newDeviceDto: NewDeviceDto;
   let categoryId: number;
-  let deviceEntity: DeviceEntity;
+
   const prismaService = new PrismaClient();
 
   beforeAll(async () => {
@@ -79,7 +79,7 @@ describe('DevicesController e2e tests', () => {
       const response = await request(app.getHttpServer())
         .post('/devices')
         .send({})
-        .expect(422);
+        .expect(HttpStatus.UNPROCESSABLE_ENTITY);
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([

@@ -1,5 +1,3 @@
-import { CategoryRepository } from '@/categories/domain/repositories/category.repository';
-import { DeviceRepository } from '@/devices/domain/repositories/device.repository';
 import { setupPrismaTests } from '@/shared/infrastructure/database/prisma/testing/setup-prisma-tests';
 import { EnvConfigModule } from '@/shared/infrastructure/env-config/env-config.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';

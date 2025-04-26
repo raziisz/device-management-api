@@ -13,11 +13,11 @@ export class ListCategoryDto implements ListCategoryInput {
   perPage?: number;
 
   @ApiPropertyOptional({
-    description: 'Sorting field: "createdAt", "name"',
+    description: 'Sorting field: "created_at", "name"',
   })
   @IsOptional()
-  @IsIn(['createdAt', 'name'], {
-    message: 'Value sort must be "createdAt" or "name"',
+  @IsIn(['created_at', 'name'], {
+    message: 'Value sort must be "created_at" or "name"',
   })
   sort?: string;
 
