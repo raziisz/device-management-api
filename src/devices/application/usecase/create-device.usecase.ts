@@ -27,8 +27,12 @@ export class CreateDeviceUseCase
       throw new BadRequestError('Category ID is required.');
     if (!color || color.trim() === '')
       throw new BadRequestError('Color is required.');
+    if (color && !/^[a-zA-ZÀ-ÿ\s]*$/.test(color))
+      throw new BadRequestError('Color must contain only letters.');
     if (!partNumber || Number(partNumber) <= 0)
       throw new BadRequestError('Part number is required.');
+    if (isNaN(Number(partNumber)))
+      throw new BadRequestError('Part number must be a number.');
 
     await this.categoryRepository.findById(categoryId);
 

@@ -4,8 +4,8 @@ import {
   IsNotEmpty,
   IsNumber,
   IsNumberString,
-  IsPositive,
   IsString,
+  Matches,
 } from 'class-validator';
 
 export class NewDeviceDto implements CreateDeviceInput {
@@ -16,6 +16,9 @@ export class NewDeviceDto implements CreateDeviceInput {
   @ApiProperty({ description: 'Color of the device' })
   @IsNotEmpty()
   @IsString()
+  @Matches(/^[a-zA-ZÀ-ÿ\s]*$/, {
+    message: 'Color must contain only letters',
+  })
   color: string;
   @ApiProperty({ description: 'Part number of the device' })
   @IsNotEmpty()
