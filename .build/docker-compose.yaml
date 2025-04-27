@@ -6,6 +6,6 @@ services:
     container_name: api-service
     restart: always
     ports:
-      - '${PORT}:3000'
+      - '3000:3000'
     env_file:
       - ../.env
