@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-service
+    restart: always
+    ports:
+      - '${PORT}:3000'
+    env_file:
+      - ../.env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - NODE_ENV=${NODE_ENV}
+      - SWAGGER_API_URL=${SWAGGER_API_URL}
+      - SWAGGER_TITLE=${SWAGGER_TITLE}
+      - SWAGGER_DESCRIPTION=${SWAGGER_DESCRIPTION}
+      - SWAGGER_VERSION=${SWAGGER_VERSION}
