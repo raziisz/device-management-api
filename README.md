@@ -89,6 +89,25 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [MySql](https://dev.mysql.com/doc/)
 - [Nest.js](https://docs.nestjs.com/)
 
+# Observações
+
+- Neste projeto, utilizei a Arquitetura Hexagonal (também chamada de Ports and Adapters). É um modelo de arquitetura de software onde:
+
+* O núcleo (domínio) da aplicação é completamente isolado.
+
+* As entradas (ports) e as saídas (adapters) conversam com esse núcleo através de interfaces, e não diretamente.
+
+* Tudo é pensado para deixar o software independente de frameworks, bancos de dados, APIs externas, etc.
+
+Adaptando também o Clean Architecture que é muito parecida com a hexagonal, mas com camadas mais formalizadas (Entities, Use Cases, etc).
+
+💬 Em resumo:
+Arquitetura Hexagonal = seu domínio no centro, tecnologias externas nas bordas, e tudo se conecta via interfaces.
+É muito usada em projetos que querem ser testáveis, fáceis de manter, independentes de frameworks, e preparados para mudanças.
+
+- Caso haja alguma coisa que eu possa melhorar no sistema, estarei totalmento aberto a criticas. Afinal, assim posso melhorar minhas habilidades no desenvolvimento.
+- Qualquer dúvida em relação ao teste, entre em contato via telefone (caso tenha) ou email: felipelibertinni@gmail.com
+
 ### 👨‍💻 Autor
 
 ---
