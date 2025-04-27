@@ -5,11 +5,11 @@ describe('Device Entity Unit Tests', () => {
     const device = new DeviceEntity({
       categoryId: 1,
       color: 'Red',
-      partNumber: 12345,
+      partNumber: '12345',
     });
     expect(device.categoryId).toBe(1);
     expect(device.color).toBe('Red');
-    expect(device.partNumber).toBe(12345);
+    expect(device.partNumber).toBe('12345');
     expect(device.createdAt).toBeInstanceOf(Date);
   });
 
@@ -19,20 +19,20 @@ describe('Device Entity Unit Tests', () => {
       {
         categoryId: 1,
         color: 'Red',
-        partNumber: 12345,
+        partNumber: '12345',
         createdAt: customDate,
       },
       1,
     );
     expect(device.categoryId).toBe(1);
     expect(device.color).toBe('Red');
-    expect(device.partNumber).toBe(12345);
+    expect(device.partNumber).toBe('12345');
     expect(device.createdAt).toEqual(customDate);
   });
 
   it('should return the correct id', () => {
     const device = new DeviceEntity(
-      { categoryId: 1, color: 'Red', partNumber: 12345 },
+      { categoryId: 1, color: 'Red', partNumber: '12345' },
       1,
     );
     expect(device.id).toBe(1);
@@ -44,7 +44,7 @@ describe('Device Entity Unit Tests', () => {
       {
         categoryId: 1,
         color: 'Red',
-        partNumber: 12345,
+        partNumber: '12345',
         createdAt: customDate,
       },
       1,
@@ -54,7 +54,7 @@ describe('Device Entity Unit Tests', () => {
       id: 1,
       categoryId: 1,
       color: 'Red',
-      partNumber: 12345,
+      partNumber: '12345',
       createdAt: customDate,
     });
   });

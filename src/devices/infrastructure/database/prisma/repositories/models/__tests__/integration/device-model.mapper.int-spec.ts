@@ -25,7 +25,7 @@ describe('DeviceModelMapper Integration Tests', () => {
 
     props = {
       category_id: category.id,
-      part_number: 123,
+      part_number: '123',
       color: 'red',
       created_at: new Date(),
     };

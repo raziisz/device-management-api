@@ -9,7 +9,7 @@ export class DevicePresenter {
   @ApiProperty({ description: 'ID of the device' })
   id: number;
   @ApiProperty({ description: 'Part number of the device' })
-  partNumber: number;
+  partNumber: string;
   @ApiProperty({ description: 'Color of the device' })
   color: string;
   @ApiProperty({ description: 'Category of the device' })

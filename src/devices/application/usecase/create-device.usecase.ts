@@ -7,7 +7,7 @@ import { UseCase } from '@/shared/application/usecases/use-case';
 export type CreateDeviceInput = {
   categoryId: number;
   color: string;
-  partNumber: number;
+  partNumber: string;
 };
 
 export type CreateDeviceOutput = VoidFunction;
@@ -27,7 +27,7 @@ export class CreateDeviceUseCase
       throw new BadRequestError('Category ID is required.');
     if (!color || color.trim() === '')
       throw new BadRequestError('Color is required.');
-    if (!partNumber || partNumber <= 0)
+    if (!partNumber || Number(partNumber) <= 0)
       throw new BadRequestError('Part number is required.');
 
     await this.categoryRepository.findById(categoryId);

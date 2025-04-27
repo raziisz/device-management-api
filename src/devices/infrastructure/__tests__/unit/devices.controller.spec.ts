@@ -14,7 +14,7 @@ describe('DevicesController', () => {
     id = 1;
     props = {
       id,
-      partNumber: 123456,
+      partNumber: '123456',
       color: 'red',
       categoryId: 1,
       category: {
@@ -38,7 +38,7 @@ describe('DevicesController', () => {
     const input = {
       categoryId: 1,
       color: 'red',
-      partNumber: 123456,
+      partNumber: '123456',
     };
 
     const presenter = await sut.create(input);

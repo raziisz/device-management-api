@@ -7,7 +7,7 @@ describe('DeviceOutputMapper Unit tests', () => {
       {
         categoryId: 1,
         color: 'Red',
-        partNumber: 12345,
+        partNumber: '12345',
         createdAt: new Date('2023-01-01'),
       },
       1,

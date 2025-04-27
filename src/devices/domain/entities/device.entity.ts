@@ -5,7 +5,7 @@ export type DeviceProps = {
   categoryId: number;
   category?: CategoryEntity;
   color: string;
-  partNumber: number;
+  partNumber: string;
   createdAt?: Date;
 };
 

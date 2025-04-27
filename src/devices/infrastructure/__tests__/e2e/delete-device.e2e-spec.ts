@@ -50,7 +50,7 @@ describe('DevicesController e2e tests', () => {
       data: {
         category_id: categoryId,
         color: 'Any color',
-        part_number: 123,
+        part_number: '123',
         created_at: new Date(),
       },
     });

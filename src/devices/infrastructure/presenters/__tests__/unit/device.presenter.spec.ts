@@ -10,7 +10,7 @@ describe('DevicePresenter', () => {
   const createdAt = new Date();
   let props = {
     id: 1,
-    partNumber: 123456,
+    partNumber: '123456',
     color: 'red',
     categoryId: 1,
     category: {
@@ -52,7 +52,7 @@ describe('DeviceCollectionPresenter', () => {
   const createdAt = new Date();
   let props = {
     id: 1,
-    partNumber: 123456,
+    partNumber: '123456',
     color: 'red',
     categoryId: 1,
     category: {

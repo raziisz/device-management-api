@@ -53,7 +53,7 @@ describe('DevicesController e2e tests', () => {
     newDeviceDto = {
       categoryId: categoryId,
       color: 'red',
-      partNumber: 123456,
+      partNumber: '123456',
     };
 
     await prismaService.device.deleteMany();
@@ -87,8 +87,8 @@ describe('DevicesController e2e tests', () => {
         'categoryId must be a number conforming to the specified constraints',
         'color must be a string',
         'color should not be empty',
+        'partNumber must be a number string',
         'partNumber should not be empty',
-        'partNumber must be a positive number',
       ]);
     });
 
@@ -114,8 +114,8 @@ describe('DevicesController e2e tests', () => {
 
       expect(response.body.error).toBe('Unprocessable Entity');
       expect(response.body.message).toEqual([
+        'partNumber must be a number string',
         'partNumber should not be empty',
-        'partNumber must be a positive number',
       ]);
     });
     it('should return an error with 422 code when the categoryId field is invalid', async () => {
@@ -146,7 +146,7 @@ describe('DevicesController e2e tests', () => {
       const entity = new DeviceEntity({
         categoryId: categoryId,
         color: 'red',
-        partNumber: 123456,
+        partNumber: '123456',
       });
       await deviceRepository.insert(entity);
 

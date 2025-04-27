@@ -24,7 +24,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     const props = {
       categoryId: 1,
       color: 'black',
-      partNumber: 123,
+      partNumber: '123',
     };
     const result = await sut.execute(props);
 
@@ -37,7 +37,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     let props = {
       categoryId: null,
       color: 'black',
-      partNumber: 123,
+      partNumber: '123',
     };
     await expect(() => sut.execute(props)).rejects.toBeInstanceOf(
       BadRequestError,
@@ -46,7 +46,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     props = {
       categoryId: 0,
       color: 'black',
-      partNumber: 123,
+      partNumber: '123',
     };
     await expect(() => sut.execute(props)).rejects.toBeInstanceOf(
       BadRequestError,
@@ -55,7 +55,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     props = {
       categoryId: -1,
       color: 'black',
-      partNumber: 123,
+      partNumber: '123',
     };
     await expect(() => sut.execute(props)).rejects.toBeInstanceOf(
       BadRequestError,
@@ -66,7 +66,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     let props = {
       categoryId: 1,
       color: null,
-      partNumber: 123,
+      partNumber: '123',
     };
     await expect(() => sut.execute(props)).rejects.toBeInstanceOf(
       BadRequestError,
@@ -75,7 +75,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     props = {
       categoryId: 1,
       color: '',
-      partNumber: 123,
+      partNumber: '123',
     };
     await expect(() => sut.execute(props)).rejects.toBeInstanceOf(
       BadRequestError,
@@ -83,7 +83,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     props = {
       categoryId: 1,
       color: '  ',
-      partNumber: 123,
+      partNumber: '123',
     };
     await expect(() => sut.execute(props)).rejects.toBeInstanceOf(
       BadRequestError,
@@ -121,7 +121,7 @@ describe('CreateDeviceUseCase Unit tests', () => {
     const props = {
       categoryId: 1,
       color: 'black',
-      partNumber: 123,
+      partNumber: '123',
     };
     jest
       .spyOn(categoryRepository, 'findById')

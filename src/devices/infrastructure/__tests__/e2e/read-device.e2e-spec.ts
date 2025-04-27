@@ -72,7 +72,7 @@ describe('DevicesController e2e tests', () => {
           new DeviceEntity({
             categoryId: categoryId,
             color: ` Color ${index + 1}`,
-            partNumber: index + 1,
+            partNumber: `${index + 1}`,
             createdAt: new Date(createdAt.getTime() + index),
           }),
         );
@@ -135,7 +135,7 @@ describe('DevicesController e2e tests', () => {
           new DeviceEntity({
             categoryId: categoryId,
             color: ` Color ${index + 1}`,
-            partNumber: element,
+            partNumber: `${element}`,
             createdAt: new Date(createdAt.getTime() + index),
           }),
         );
@@ -165,7 +165,7 @@ describe('DevicesController e2e tests', () => {
         .expect(HttpStatus.OK);
 
       expect(Object.keys(response.body)).toStrictEqual(['data', 'meta']);
-      expect(response.body.data[0].partNumber).toBe(444);
+      expect(response.body.data[0].partNumber).toBe('444');
       expect(response.body.meta).toStrictEqual({
         total: 1,
         currentPage: 1,
