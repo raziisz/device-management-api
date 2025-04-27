@@ -9,6 +9,10 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 Está aplicação foi desenvolvida na versão v22.15.0 do Node.js e v11.0.7 do NestJs
 
+## Documentação da API
+
+Acesse [Swagger](http://ec2-177-71-136-6.sa-east-1.compute.amazonaws.com:3000/swagger) da aplicação para verificar a documentação da API.
+
 ### 🎲 Baixando o repositório
 
 ```bash
