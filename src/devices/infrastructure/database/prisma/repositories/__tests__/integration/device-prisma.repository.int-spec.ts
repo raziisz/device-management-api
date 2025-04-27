@@ -46,14 +46,14 @@ describe('DevicePrismaRepository Integration tests', () => {
       data: {
         category_id: category.id,
         color: 'red',
-        part_number: 1234,
+        part_number: '1234',
         created_at: new Date(),
       },
     });
 
     const entity = new DeviceEntity({
       categoryId: category.id,
-      partNumber: 1234,
+      partNumber: '1234',
       color: 'red',
     });
 
@@ -65,12 +65,12 @@ describe('DevicePrismaRepository Integration tests', () => {
   it('should insert a new device', async () => {
     const entity = new DeviceEntity({
       categoryId: category.id,
-      partNumber: 321,
+      partNumber: '321',
       color: 'red',
     });
     await sut.insert(entity);
 
-    const result = await prismaService.device.findUnique({
+    const result = await prismaService.device.findFirst({
       where: { part_number: entity.partNumber },
     });
 
@@ -83,7 +83,7 @@ describe('DevicePrismaRepository Integration tests', () => {
   it('should get a device by id', async () => {
     const entity = new DeviceEntity({
       categoryId: category.id,
-      partNumber: 1234,
+      partNumber: '1234',
       color: 'red',
     });
     const newDevice = await prismaService.device.create({
@@ -116,7 +116,7 @@ describe('DevicePrismaRepository Integration tests', () => {
   it('should delete a device', async () => {
     const entity = new DeviceEntity({
       categoryId: category.id,
-      partNumber: 1234,
+      partNumber: '1234',
       color: 'red',
     });
 
@@ -144,7 +144,7 @@ describe('DevicePrismaRepository Integration tests', () => {
       const arrange = Array(16)
         .fill(0)
         .map((_, index) => ({
-          partNumber: index + 1,
+          partNumber: `${index + 1}`,
           color: `Color ${index}`,
           categoryId: category.id,
         }));
@@ -191,7 +191,7 @@ describe('DevicePrismaRepository Integration tests', () => {
       arrange.forEach((element, index) => {
         entities.push(
           new DeviceEntity({
-            partNumber: element,
+            partNumber: String(element),
             color: `Color ${index}`,
             categoryId: category.id,
             createdAt: new Date(createdAt.getTime() + index),

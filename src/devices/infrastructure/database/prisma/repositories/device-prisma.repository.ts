@@ -18,16 +18,15 @@ export class DevicePrismaRepository implements DeviceRepository {
     const sortable = this.sortableFields.includes(props.sort);
     const orderByField = sortable ? props.sort : 'created_at';
     const orderByDir = sortable ? props.sortDir : 'desc';
-    const toPartNumberFilter =
-      props.filter?.length <= 14 ? props.filter : undefined;
+    const toPartNumberFilter = !isNaN(Number(props.filter))
+      ? props.filter
+      : undefined;
     const count = await this.prismaService.device.count({
       ...(props.filter && {
         where: {
           OR: [
             {
-              part_number: !isNaN(Number(toPartNumberFilter))
-                ? Number(toPartNumberFilter)
-                : undefined,
+              part_number: toPartNumberFilter,
             },
             {
               color: {
@@ -44,9 +43,7 @@ export class DevicePrismaRepository implements DeviceRepository {
         where: {
           OR: [
             {
-              part_number: !isNaN(Number(toPartNumberFilter))
-                ? Number(toPartNumberFilter)
-                : undefined,
+              part_number: toPartNumberFilter,
             },
             {
               color: {
@@ -74,7 +71,7 @@ export class DevicePrismaRepository implements DeviceRepository {
     });
   }
   async insert(entity: DeviceEntity): Promise<void | number> {
-    const existsDevice = await this.prismaService.device.findUnique({
+    const existsDevice = await this.prismaService.device.findFirst({
       where: { part_number: entity.partNumber },
     });
     if (existsDevice) throw new ConflictError('Partnumber already used');

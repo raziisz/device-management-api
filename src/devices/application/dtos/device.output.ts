@@ -6,7 +6,7 @@ export type DeviceOutput = {
   categoryId: number;
   category?: CategoryOutput;
   color: string;
-  partNumber: number;
+  partNumber: string;
   createdAt: Date;
 };
 

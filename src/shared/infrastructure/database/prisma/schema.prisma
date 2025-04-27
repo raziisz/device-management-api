@@ -25,7 +25,7 @@ model Category {
 
 model Device {
   id          Int      @id @default(autoincrement())
-  part_number Int      @unique @db.Int
+  part_number String   @db.VarChar(128)
   color       String   @db.VarChar(16)
   category_id Int
   category    Category @relation(fields: [category_id], references: [id], map: "device_category_fk")

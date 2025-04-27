@@ -22,7 +22,7 @@ describe('ListDeviceUseCase Unit tests', () => {
         new DeviceEntity({
           categoryId: 1,
           color: 'black',
-          partNumber: 123,
+          partNumber: '123',
           category: new CategoryEntity(
             { name: 'Category 1', createdAt: new Date() },
             1,
@@ -50,7 +50,7 @@ describe('ListDeviceUseCase Unit tests', () => {
 
     expect(result).toBeDefined();
     expect(result.items).toHaveLength(1);
-    expect(result.items[0].partNumber).toBe(123);
+    expect(result.items[0].partNumber).toBe('123');
     expect(result.total).toBe(1);
     expect(result.currentPage).toBe(props.page);
     expect(result.perPage).toBe(props.perPage);
