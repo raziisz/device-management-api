@@ -11,7 +11,7 @@ Está aplicação foi desenvolvida na versão v22.15.0 do Node.js e v11.0.7 do N
 
 ## Documentação da API
 
-Acesse [Swagger](http://ec2-177-71-136-6.sa-east-1.compute.amazonaws.com:3000/swagger) da aplicação para verificar a documentação da API.
+Acesse [Swagger](http://ec2-15-228-244-121.sa-east-1.compute.amazonaws.com:3000/swagger) da aplicação para verificar a documentação da API.
 
 ### 🎲 Baixando o repositório
 
